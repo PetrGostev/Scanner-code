@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Штрих-сканер</string>
+    <string name="scan_text">Поднесите камеру так, чтобы штрих-код оказался в области квадрата</string>
+    <string name="no_permission_to_camera">Нет разрешения к камере</string>
+</resources>
