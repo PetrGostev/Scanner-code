@@ -1,19 +1,21 @@
 package com.gostev.scanner
 
 import android.os.Bundle
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.gostev.scanner.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var mFrame: FrameLayout
-    var mScannerFragment = ScannerFragment()
+    companion object {
+        lateinit var binding: ActivityMainBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         presentScannerFragment()
     }
@@ -22,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
 
-        fragmentTransaction.replace(R.id.frame, mScannerFragment)
+        fragmentTransaction.replace(R.id.frame, ScannerFragment())
         fragmentTransaction.commit()
     }
 }
