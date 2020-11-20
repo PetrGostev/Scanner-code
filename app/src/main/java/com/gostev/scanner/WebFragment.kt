@@ -7,9 +7,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.gostev.scanner.databinding.ScannerFragmentBinding
 import com.gostev.scanner.databinding.WebFragmentBinding
 
-class WebFragment : Fragment() {
+class WebFragment : Fragment(R.layout.web_fragment) {
+    private val binding: WebFragmentBinding by viewBinding()
 
     private val EXTRA_BARCODE = "EXTRA_BARCODE"
     private lateinit var mCode: String
@@ -23,19 +27,12 @@ class WebFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-
     @SuppressLint("SetJavaScriptEnabled")
-    override fun onCreateView(inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-
-        val binding = WebFragmentBinding.inflate(layoutInflater)
-        val view = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         MainActivity.binding.scannerScanText.visibility = GONE
         binding.web.settings.javaScriptEnabled = true
         binding.web.loadUrl("https://www.google.com/search?q=" + mCode + "&gws_rd=ss")
-
-        return view
     }
 }

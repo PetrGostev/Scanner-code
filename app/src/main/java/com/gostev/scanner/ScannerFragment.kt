@@ -5,14 +5,13 @@ import android.hardware.Camera
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RawRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.zxing.Result
 import com.gostev.scanner.databinding.ScannerFragmentBinding
 import com.karumi.dexter.Dexter
@@ -23,25 +22,19 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
-class ScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
+class ScannerFragment : Fragment(R.layout.scanner_fragment), ZXingScannerView.ResultHandler {
 
     private var mCameraId = Camera.CameraInfo.CAMERA_FACING_BACK
     private val EXTRA_BARCODE = "EXTRA_BARCODE"
 
     private lateinit var mCode: String
-    private lateinit var binding: ScannerFragmentBinding
+    private val binding: ScannerFragmentBinding by viewBinding()
 
-    override fun onCreateView(inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-
-        binding = ScannerFragmentBinding.inflate(layoutInflater)
-        val view = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         MainActivity.binding.scannerScanText.visibility = View.VISIBLE
         MainActivity.binding.scannerScanText.isSelected
-
-        return view
     }
 
     override fun onStart() {
@@ -102,7 +95,7 @@ class ScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
     }
 
     private fun presentWebFragment() {
-        val fragmentManager: FragmentManager = activity!!.supportFragmentManager
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
 
         val webFragment = WebFragment()
